@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSTC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Color variables */
+        :root {
+            --primary-red: #B22222;
+            --secondary-red: #DC143C;
+            --light-red: #FFB6C1;
+            --text-color: #fff;
+            --hover-red: #8B0000;
+            --container-bg: #fff;
+            --shadow-color: rgba(178, 34, 34, 0.2);
+            --body-bg: #FFF0F5;
+            --sidebar-text-color: #B22222;
+        }
+    
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    
+        html, body {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--body-bg);
+        }
+    
+        .header {
+            background-color: var(--primary-red);
+            color: var(--text-color);
+            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            transition: padding-left 0.5s;
+        }
+    
+        .header-title {
+            margin: 0;
+            font-size: 24px;
+            margin-left: 50px;
+            transition: margin-left 0.5s;
+        }
+    
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: var(--primary-red);
+            color: var(--text-color);
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            position: absolute;
+            left: 15px;
+            transition: 0.3s;
+        }
+    
+        .openbtn:hover {
+            background-color: var(--secondary-red);
+        }
+    
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 50px;
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 1000;
+        }
+
+        .sidebar a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 18px;
+            color: var(--sidebar-text-color);
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            transition: 0.3s;
+            background-color: rgba(255, 255, 255, 0.7);
+            margin: 2px 0;
+            font-weight: bold;
+        }
+
+        .sidebar a:hover {
+            background-color: rgba(178, 34, 34, 0.1);
+            color: var(--hover-red);
+            transform: translateX(5px);
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            cursor: pointer;
+            color: var(--sidebar-text-color);
+            background: none;
+            border: none;
+            padding: 10px;
+        }
+
+        .sidebar .closebtn:hover {
+            color: var(--hover-red);
+        }
+
+        .sidebar i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+            color: var(--sidebar-text-color);
+        }
+
+        .sidebar-section {
+            margin: 10px 0;
+            border-bottom: 1px solid rgba(178, 34, 34, 0.2);
+            padding-bottom: 10px;
+        }
+
+        .sidebar-section:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-section .section-title {
+            padding: 10px 25px;
+            color: var(--sidebar-text-color);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+            opacity: 0.7;
+            text-align: center;
+        }
+
+        #main {
+            flex: 1;
+            padding: 20px;
+        }
+    
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: var(--container-bg);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px var(--shadow-color);
+        }
+    
+        .footer {
+            background-color: var(--primary-red);
+            color: var(--text-color);
+            padding: 10px;
+            text-align: center;
+        }
+    
+        .footer a {
+            color: var(--light-red);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+    
+        .footer a:hover {
+            color: var(--text-color);
+        }
+    
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+    
+            .sidebar {
+                background-color: rgba(255, 255, 255, 0.95);
+            }
+            
+            .sidebar a {
+                background-color: rgba(255, 255, 255, 0.8);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header" id="header">
+        <button class="openbtn" onclick="openNav()">☰</button>
+        <h1 class="header-title" id="headerTitle">SSTC</h1>
+    </div>
+
+    <div id="mySidebar" class="sidebar">
+        <span class="closebtn" onclick="closeNav()">×</span>
+        
+        <div class="sidebar-section">
+            <a href="/home"><i class="fas fa-home"></i> Home</a>
+        </div>
+    
+        <div class="sidebar-section">
+            <a href="/notices"><i class="fas fa-bell"></i> Notices</a>
+        </div>
+    
+        <div class="sidebar-section">
+            <div class="section-title">Resources</div>
+            <a href="/files"><i class="fas fa-file"></i> Files</a>
+            <a href="/vlabs"><i class="fas fa-flask"></i> vLabs</a>
+        </div>
+    
+        <div class="sidebar-section">
+            <a href="/profile"><i class="fas fa-user"></i> Profile</a>
+        </div>
+    
+        <div class="sidebar-section">
+            <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </div>  
+
+    <div id="main">
+        <div class="container">
+            <h1>Welcome to the Home Page</h1>
+            <!-- Add more content for the home page here -->
+        </div>
+    </div>
+
+    <div class="footer">
+        Developed by <a href="https://developer-social-profile.com" target="_blank">Developer Name</a> and guided by <a href="https://guide-social-profile.com" target="_blank">Guide Name</a> <br>
+        <span>SSTC College</span>
+    </div>
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "250px";
+            document.querySelector(".header").style.paddingLeft = "275px";
+            document.querySelector(".header-title").style.marginLeft = "0";
+        }
+    
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+            document.querySelector(".header").style.paddingLeft = "25px";
+            document.querySelector(".header-title").style.marginLeft = "50px";
+        }
+    </script>
+</body>
+</html>

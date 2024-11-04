@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* Color variables */
+        :root {
+            --primary-red: #B22222; /* Firebrick red */
+            --secondary-red: #DC143C; /* Crimson */
+            --light-red: #FFB6C1; /* Light pink */
+            --text-color: #fff;
+            --hover-red: #8B0000; /* Dark red */
+            --container-bg: #fff;
+            --shadow-color: rgba(178, 34, 34, 0.2);
+            --body-bg: #FFF0F5; /* Lavender blush */
+        }
+
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--body-bg);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header styling */
+        .header {
+            background-color: var(--primary-red);
+            color: var(--text-color);
+            padding: 1em;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: var(--text-color); /* Ensure header text is white */
+            margin-bottom: 0; /* Remove bottom margin for header h1 */
+        }
+
+        /* Main content styling */
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2em;
+        }
+
+        .login-container {
+            background-color: var(--container-bg);
+            border-radius: 8px;
+            padding: 2em;
+            box-shadow: 0 0 10px var(--shadow-color);
+            width: 50%;
+            max-width: 400px;
+            height: 350px;
+        }
+
+        .login-container h1 {
+            color: var(--primary-red);
+            margin-bottom: 1em;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1em;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5em;
+            color: var(--primary-red);
+        }
+
+        input {
+            width: 100%;
+            padding: 0.5em;
+            border: 1px solid var(--light-red);
+            border-radius: 4px;
+        }
+
+        button {
+            width: 50%;
+            height: 35px;
+            padding: 0.5em;
+            background-color: var(--primary-red);
+            color: var(--text-color);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-left: 80px;
+            margin-top: 20px;
+            font-size: medium;
+        }
+
+        button:hover {
+            background-color: var(--hover-red);
+        }
+
+        p {
+            margin-top: 1em;
+            text-align: center;
+        }
+
+        a {
+            color: var(--secondary-red);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>SSTC </h1>
+    </header>
+
+    <main class="main-content">
+        <div class="login-container">
+            <h1>Login</h1>
+            <form action="/login" method="POST">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <p style="display: none;">Don't have an account? <a href="/register">Register here</a></p>
+            <p style="display: none;"><a href="/forgot-password">Forgot Password?</a></p>
+        </div>
+    </main>
+</body>
+</html>

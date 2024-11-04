@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSTC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Resetting margins and paddings */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        /* Full viewport height layout */
+        html, body {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+        /* Header styling */
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        /* Site name that will move with sidebar */
+        .header-title {
+            margin: 0;
+            font-size: 24px;
+            margin-left: 50px; /* Spacing from the button */
+            transition: margin-left 0.5s; /* Smooth transition */
+        }
+        /* Open button styling, fixed on the left */
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #333;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            position: absolute;
+            left: 15px;
+            transition: 0.3s;
+        }
+        .openbtn:hover {
+            background-color: #444;
+        }
+        /* Sidebar styling */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #333;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            box-shadow: 3px 0 10px rgba(0,0,0,0.2);
+        }
+        .sidebar a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #fff;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #444;
+        }
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            cursor: pointer;
+            color: #fff;
+        }
+        /* Main content styling */
+        #main {
+            flex: 1; /* Takes remaining space, pushing footer to the bottom */
+            transition: margin-left 0.5s;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        /* Footer styling */
+        .footer {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .footer a {
+            color: #ccc;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .footer a:hover {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with open button and site name that moves with sidebar -->
+    <div class="header">
+        <button class="openbtn" onclick="openNav()">☰</button>
+        <h1 class="header-title" id="headerTitle">SSTC</h1>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="mySidebar" class="sidebar">
+        <span class="closebtn" onclick="closeNav()">×</span>
+        <a href="/home"><i class="fas fa-home"></i> Home</a>
+        <a href="/notices"><i class="fas fa-bell"></i> Notices</a>
+        <a href="/files"><i class="fas fa-file"></i> Files</a>
+        <a href="/vlabs"><i class="fas fa-flask"></i> vLabs</a>
+        <a href="/profile"><i class="fas fa-user"></i> Profile</a>
+        <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+
+    <!-- Main content -->
+    <div id="main">
+        <div class="container">
+            <h1>Welcome to the Home Page</h1>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        Developed by <a href="https://developer-social-profile.com" target="_blank">Developer Name</a> and guided by <a href="https://guide-social-profile.com" target="_blank">Guide Name</a> <br>
+        <span>SSTC College</span>
+    </div>
+
+    <!-- JavaScript for sidebar functionality -->
+    <script>
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+            document.getElementById("headerTitle").style.marginLeft = "260px"; // Move header title with sidebar
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+            document.getElementById("headerTitle").style.marginLeft = "50px"; // Reset header title position
+        }
+    </script>
+</body>
+</html>

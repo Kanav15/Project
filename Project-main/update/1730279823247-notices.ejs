@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notices</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-red: #D32F2F;
+            --secondary-red: #F44336;
+            --light-red: #FFCDD2;
+            --dark-red: #B71C1C;
+            --white: #FFFFFF;
+            --off-white: #FFF5F5;
+        }
+
+        body { 
+            font-family: Arial, sans-serif; 
+            line-height: 1.6; 
+            margin: 0; 
+            padding: 0;
+            background-color: var(--white);
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            background-color: var(--primary-red);
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            box-shadow: 3px 0 10px rgba(0,0,0,0.2);
+        }
+
+        .sidebar a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 18px;
+            color: var(--white);
+            display: block;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        .sidebar a:hover {
+            background-color: var(--dark-red);
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+            cursor: pointer;
+            color: var(--white);
+        }
+
+        .openbtn {
+            position: fixed;
+            z-index: 999;
+            left: 10px;
+            top: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: var(--primary-red);
+            color: var(--white);
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .openbtn:hover {
+            background-color: var(--dark-red);
+        }
+
+        #main {
+            transition: margin-left .5s;
+            padding: 20px;
+            margin-left: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: var(--white);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            transition: margin-left .5s;
+        }
+
+        .sidebar i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        h1 { 
+            color: var(--primary-red); 
+        }
+
+        .notice { 
+            background: var(--off-white); 
+            margin: 10px 0; 
+            padding: 15px; 
+            border-radius: 5px; 
+            border-left: 4px solid var(--primary-red);
+        }
+
+        .notice h3 { 
+            margin-top: 0; 
+            color: var(--dark-red);
+        }
+
+        .notice p { 
+            margin-bottom: 5px; 
+            color: #333;
+        }
+
+        .notice small { 
+            color: #777; 
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid var(--light-red);
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: var(--primary-red);
+            color: var(--white);
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--dark-red);
+        }
+
+        .edit-form {
+            background: var(--white);
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border: 1px solid var(--light-red);
+        }
+
+        .edit-btn, .delete-btn {
+            padding: 5px 10px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .edit-btn {
+            background-color: var(--secondary-red);
+            color: var(--white);
+        }
+
+        .edit-btn:hover {
+            background-color: var(--dark-red);
+        }
+
+        .delete-btn {
+            background-color: var(--dark-red);
+            color: var(--white);
+        }
+
+        .delete-btn:hover {
+            background-color: #8B0000;
+        }
+
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                padding-top: 15px;
+            }
+            .sidebar a {
+                font-size: 16px;
+            }
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div id="mySidebar" class="sidebar">
+        <span class="closebtn" onclick="closeNav()">×</span>
+        <a href="/home"><i class="fas fa-home"></i>Home</a>
+        <a href="/notices"><i class="fas fa-bell"></i>Notices</a>
+        <a href="/files"><i class="fas fa-file"></i> Files</a>
+        <a href="/vlabs"><i class="fas fa-flask"></i> vLabs</a>
+        <a href="/profile"><i class="fas fa-user"></i>Profile</a>
+        <a href="/logout"><i class="fas fa-sign-out-alt"></i>Logout</a>
+    </div>
+
+    <!-- Open button -->
+    <button class="openbtn" onclick="openNav()">☰</button>
+
+    <!-- Main content -->
+    <div id="main">
+        <div class="container">
+            <h1>Notices</h1>
+            
+            <% if (user && (user.role === 'faculty' || user.role === 'admin')) { %>
+                <h2>Create New Notice</h2>
+                <form action="/notices" method="POST">
+                    <input type="text" name="title" placeholder="Notice Title" required>
+                    <textarea name="content" placeholder="Notice Content" required></textarea>
+                    <button type="submit">Post Notice</button>
+                </form>
+            <% } %>
+
+            <h2>All Notices</h2>
+            <% if (notices && notices.length > 0) { %>
+                <% notices.forEach(notice => { %>
+                    <div class="notice">
+                        <h3><%= notice.title %></h3>
+                        <p><%= notice.content %></p>
+                        <small>Posted by: <%= notice.createdBy %> on <%= notice.createdAt.toLocaleString() %></small>
+                        
+                        <% if (user && (user.role === 'faculty' || user.role === 'admin')) { %>
+                            <button onclick="showEditForm('<%= notice._id %>', '<%= notice.title %>', `<%= notice.content %>`)" class="edit-btn">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            
+                            <form action="/notices/delete/<%= notice._id %>" method="POST" style="display: inline;">
+                                <button type="submit" class="delete-btn"><i class="fas fa-trash"></i> Delete</button>
+                            </form>
+                        <% } %>
+                    </div>
+                
+                    <!-- Add hidden edit form for each notice -->
+                    <div id="editForm-<%= notice._id %>" class="edit-form" style="display: none;">
+                        <form action="/notices/update/<%= notice._id %>" method="POST">
+                            <input type="text" name="title" id="editTitle-<%= notice._id %>" required>
+                            <textarea name="content" id="editContent-<%= notice._id %>" required></textarea>
+                            <button type="submit">Update Notice</button>
+                            <button type="button" onclick="hideEditForm('<%= notice._id %>')">Cancel</button>
+                        </form>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p>No notices available.</p>
+            <% } %>
+        </div>
+    </div>
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+        
+        }
+        function showEditForm(noticeId, title, content) {
+        // Decode content if it contains HTML entities
+        content = content.replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+        
+        // Hide all other edit forms
+        document.querySelectorAll('.edit-form').forEach(form => {
+            form.style.display = 'none';
+        });
+
+        // Show the selected edit form
+        const editForm = document.getElementById(`editForm-${noticeId}`);
+        const titleInput = document.getElementById(`editTitle-${noticeId}`);
+        const contentInput = document.getElementById(`editContent-${noticeId}`);
+
+        titleInput.value = title;
+        contentInput.value = content;
+        editForm.style.display = 'block';
+    }
+
+    function hideEditForm(noticeId) {
+        document.getElementById(`editForm-${noticeId}`).style.display = 'none';
+    }
+    </script>
+</body>
+</html>

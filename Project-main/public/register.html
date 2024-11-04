@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff0f0;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #B22222;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            margin: 0;
+        }
+        .register-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(255,0,0,0.1);
+            padding: 3rem;
+            width: 300px;
+            margin: 5rem auto;
+            align-content: center;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #B22222;
+        }
+        input[type="text"], input[type="password"], input[type="tel"], input[type="email"], select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ffcccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #B22222;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #8B0000;
+        }
+        p {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        a {
+            color: #ff3333;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>SSTC</h1>
+    </header>
+    <div class="register-container">
+        <h2>Register</h2>
+        <form action="/register" method="POST" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="Email">Email:</label>
+                <input type="email" id="Email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="branch">Branch:</label>
+                <select id="branch" name="branch" required>
+                    <option value="">Select Branch</option>
+                    <option value="cs">Computer Science</option>
+                    <option value="it">Information Technology</option>
+                    <option value="aids">AI & Data Science</option>
+                    <option value="extc">Electronics & Telecommunication</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="year">Year:</label>
+                <select id="year" name="year" required>
+                    <option value="">Select Year</option>
+                    <option value="1">1st Year</option>
+                    <option value="2">2nd Year</option>
+                    <option value="3">3rd Year</option>
+                    <option value="4">4th Year</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
+            </div>
+            <div class="form-group">
+                <label for="role">Role:</label>
+                <select id="role" name="role" required>
+                    <option value="">Select Role</option>
+                    <option value="student">Student</option>
+                    <option value="faculty">Faculty</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="/login">Login here</a></p>
+    </div>
+
+    <script>
+        function validateForm() {
+            var fields = ["username", "email", "password", "branch", "year", "phone", "role"];
+            for (var i = 0; i < fields.length; i++) {
+                var field = document.forms[0][fields[i]];
+                if (!field || field.value.trim() === "") {
+                    alert(fields[i].charAt(0).toUpperCase() + fields[i].slice(1) + " must be filled out");
+                    return false;
+                }
+            }
+    
+            // Email validation
+            var email = document.forms[0]["email"].value;
+            var emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            if (!emailRegex.test(email)) {
+                alert("Please enter a valid email address");
+                return false;
+            }
+    
+            return true;
+        }
+    </script>
+</body>
+</html>

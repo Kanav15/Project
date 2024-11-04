@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Labs</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-red: #B22222;
+            --secondary-red: #DC143C;
+            --light-red: #FFB6C1;
+            --text-color: #fff;
+            --hover-red: #8B0000;
+            --container-bg: #fff;
+            --shadow-color: rgba(178, 34, 34, 0.2);
+            --body-bg: #FFF0F5;
+            --sidebar-text-color: #B22222;
+        }
+
+        body { 
+            font-family: Arial, sans-serif; 
+            line-height: 1.6; 
+            margin: 0; 
+            padding: 0;
+            background-color: var(--white);
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 50px;
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 1000;
+        }
+
+        .sidebar a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 18px;
+            color: var(--sidebar-text-color);
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            transition: 0.3s;
+            background-color: rgba(255, 255, 255, 0.7);
+            margin: 2px 0;
+            font-weight: bold;
+        }
+
+        .sidebar a:hover {
+            background-color: rgba(178, 34, 34, 0.1);
+            color: var(--hover-red);
+            transform: translateX(5px);
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            cursor: pointer;
+            color: var(--sidebar-text-color);
+            background: none;
+            border: none;
+            padding: 10px;
+        }
+
+        .sidebar .closebtn:hover {
+            color: var(--hover-red);
+        }
+
+        .sidebar i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+            color: var(--sidebar-text-color);
+        }
+
+        .sidebar-section {
+            margin: 10px 0;
+            border-bottom: 1px solid rgba(178, 34, 34, 0.2);
+            padding-bottom: 10px;
+        }
+
+        .sidebar-section:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-section .section-title {
+            padding: 10px 25px;
+            color: var(--sidebar-text-color);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+            opacity: 0.7;
+            text-align: center;
+        }
+        .openbtn {
+            position: fixed;
+            z-index: 999;
+            left: 10px;
+            top: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: var(--primary-red);
+            color: var(--white);
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .openbtn:hover {
+            background-color: var(--dark-red);
+        }
+
+        #main {
+            transition: margin-left .5s;
+            padding: 20px;
+            margin-left: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: var(--white);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 { 
+            color: var(--primary-red);
+            margin-bottom: 30px;
+        }
+
+        .add-vlab-form {
+            background-color: var(--off-white);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid var(--light-red);
+        }
+
+        .add-vlab-form h2 {
+            color: var(--dark-red);
+            margin-top: 0;
+        }
+
+        input[type="text"], 
+        input[type="url"], 
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid var(--light-red);
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus, 
+        input[type="url"]:focus, 
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-red);
+        }
+
+        button {
+            background-color: var(--primary-red);
+            color: var(--white);
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--dark-red);
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: var(--white);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background-color: var(--primary-red);
+            color: var(--white);
+            padding: 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--light-red);
+        }
+
+        tr:hover {
+            background-color: var(--off-white);
+        }
+
+        .btn {
+            padding: 8px 15px;
+            margin: 2px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-red);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--dark-red);
+        }
+
+        .btn-danger {
+            background-color: var(--dark-red);
+            color: var(--white);
+        }
+
+        .btn-danger:hover {
+            background-color: #8B0000;
+        }
+
+        /* Search Bar Styles */
+        .search-bar {
+            margin-bottom: 20px;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--light-red);
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: var(--primary-red);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .close {
+            color: var(--dark-red);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: var(--primary-red);
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .sidebar {
+                padding-top: 15px;
+            }
+            
+            .sidebar a {
+                font-size: 16px;
+            }
+        }
+        /* Action Icons Styles */
+.action-icon {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px;
+    margin: 0 5px;
+    color: var(--primary-red);
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.action-icon:hover {
+    transform: scale(1.1);
+}
+
+.action-icon i {
+    transition: all 0.3s ease;
+}
+
+.action-icon:hover i {
+    color: var(--dark-red);
+}
+
+.delete-icon {
+    color: var(--primary-red);
+}
+
+.delete-icon:hover {
+    color: var(--dark-red);
+}
+
+/* Remove default button styles */
+button.action-icon {
+    background: none;
+  
+}
+    </style>
+</head>
+<body>
+  
+    <div id="mySidebar" class="sidebar">
+        <span class="closebtn" onclick="closeNav()">×</span>
+        
+        <div class="sidebar-section">
+            <a href="/home"><i class="fas fa-home"></i> Home</a>
+        </div>
+    
+        <div class="sidebar-section">
+            <a href="/notices"><i class="fas fa-bell"></i> Notices</a>
+        </div>
+    
+        <div class="sidebar-section">
+            <div class="section-title">Resources</div>
+            <a href="/files"><i class="fas fa-file"></i> Files</a>
+            <a href="/vlabs"><i class="fas fa-flask"></i> vLabs</a>
+        </div>
+    
+        <div class="sidebar-section">
+            <a href="/profile"><i class="fas fa-user"></i> Profile</a>
+        </div>
+    
+        <div class="sidebar-section">
+            <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </div>  
+
+    <!-- Open button -->
+    <button class="openbtn" onclick="openNav()">☰</button>
+
+    <!-- Main content -->
+    <div id="main">
+        <div class="container">
+            <h1>Virtual Labs</h1>
+            
+            <% if (user.role === 'admin' || user.role === 'faculty') { %>
+            <!-- Add New VLab Form -->
+            <div class="add-vlab-form">
+                <h2>Add New Virtual Lab</h2>
+                <form action="/vlabs" method="POST">
+                    <input type="text" name="subject" placeholder="Subject" required>
+                    <input type="text" name="labName" placeholder="Lab Name" required>
+                    <input type="url" name="labUrl" placeholder="Lab URL" required>
+                    <button type="submit">Add VLab</button>
+                </form>
+            </div>
+            <% } %>
+
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search virtual labs...">
+            </div>
+
+            <!-- VLabs Table -->
+           
+<table>
+    <thead>
+        <tr>
+            <th>Subject</th>
+            <th>Lab Name</th>
+            <th style="text-align: center;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% vlabs.forEach(function(vlab) { %>
+        <tr>
+            <td><%= vlab.subject %></td>
+            <td><%= vlab.labName %></td>
+            <td style="text-align: center;">
+                <a href="<%= vlab.labUrl %>" target="_blank" class="action-icon" title="Open Lab">
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+                <% if (user.role === 'admin' || user.role === 'faculty') { %>
+                <button onclick="deleteVLab('<%= vlab._id %>')" class="action-icon delete-icon" title="Delete Lab">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+                <% } %>
+            </td>
+        </tr>
+        <% }); %>
+    </tbody>
+</table>
+        </div>
+    </div>
+
+    <% if (user.role === 'admin' || user.role === 'faculty') { %>
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Edit Virtual Lab</h2>
+            <form id="edit Form" action="/vlabs/edit" method="POST">
+                <input type="hidden" name="vlabId" id="vlabId">
+                <input type="text" name="subject" id="subject" placeholder="Subject" required>
+                <input type="text" name="labName" id="labName" placeholder="Lab Name" required>
+                <input type="url" name="labUrl" id="labUrl" placeholder="Lab URL" required>
+                <button type="submit">Update VLab</button>
+            </form>
+        </div>
+    </div>
+    <% } %>  
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "250px";
+            // document.getElementById("main").style.marginLeft = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+            // document.getElementById("main").style.marginLeft = "0";
+        }
+
+        // Edit VLab function
+        function editVLab(vlabId) {
+            // Get the vlab data from the database
+            fetch(`/vlabs/${vlabId}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Populate the edit form with the vlab data
+                    document.getElementById("vlabId").value = vlabId;
+                    document.getElementById("subject").value = data.subject;
+                    document.getElementById("labName").value = data.labName;
+                    document.getElementById("labUrl").value = data.labUrl;
+
+                    // Show the edit modal
+                    document.getElementById("editModal").style.display = "block";
+                });
+        } 
+//delete
+        function deleteVLab(vlabId) {
+    if (confirm('Are you sure you want to delete this Virtual Lab?')) {
+        fetch(`/vlabs/${vlabId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'same-origin' // This is important for sessions
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Reload the page to show updated list
+                window.location.reload();
+            } else {
+                alert(data.message || 'Failed to delete the Virtual Lab');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while deleting the Virtual Lab');
+        });
+    }
+}
+         // Search Functionality
+         document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchText = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('tbody tr');
+            
+            rows.forEach(row => {
+                const subject = row.cells[0].textContent.toLowerCase();
+                const labName = row.cells[1].textContent.toLowerCase();
+                
+                if(subject.includes(searchText) || labName.includes(searchText)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notices</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+       :root {
+            --primary-red: #B22222;
+            --secondary-red: #DC143C;
+            --light-red: #FFB6C1;
+            --text-color: #fff;
+            --hover-red: #8B0000;
+            --container-bg: #fff;
+            --shadow-color: rgba(178, 34, 34, 0.2);
+            --body-bg: #FFF0F5;
+            --sidebar-text-color: #B22222;
+        }
+
+
+        body { 
+            font-family: Arial, sans-serif; 
+            line-height: 1.6; 
+            margin: 0; 
+            padding: 0;
+            background-color: #FFF0F5;
+        }
+
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 50px;
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 1000;
+        }
+
+        .sidebar a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 18px;
+            color: var(--sidebar-text-color);
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            transition: 0.3s;
+            background-color: rgba(255, 255, 255, 0.7);
+            margin: 2px 0;
+            font-weight: bold;
+        }
+
+        .sidebar a:hover {
+            background-color: rgba(178, 34, 34, 0.1);
+            color: var(--hover-red);
+            transform: translateX(5px);
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            cursor: pointer;
+            color: var(--sidebar-text-color);
+            background: none;
+            border: none;
+            padding: 10px;
+        }
+
+        .sidebar .closebtn:hover {
+            color: var(--hover-red);
+        }
+
+        .sidebar i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+            color: var(--sidebar-text-color);
+        }
+
+        .sidebar-section {
+            margin: 10px 0;
+            border-bottom: 1px solid rgba(178, 34, 34, 0.2);
+            padding-bottom: 10px;
+        }
+
+        .sidebar-section:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-section .section-title {
+            padding: 10px 25px;
+            color: var(--sidebar-text-color);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+            opacity: 0.7;
+            text-align: center;
+        }
+        .openbtn {
+            position: fixed;
+            z-index: 999;
+            left: 10px;
+            top: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: var(--primary-red);
+            color: var(--white);
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .openbtn:hover {
+            background-color: var(--dark-red);
+        }
+
+        #main {
+            transition: margin-left .5s;
+            padding: 20px;
+            margin-left: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            transition: margin-left .5s;
+        }
+
+        .sidebar i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        h1 { 
+            color: var(--primary-red); 
+        }
+
+        .notice { 
+            background: var(--off-white); 
+            margin: 10px 0; 
+            padding: 15px; 
+            border-radius: 5px; 
+            border-left: 4px solid var(--primary-red);
+            position: relative;
+    padding-right: 60px
+        }
+        
+        .notice h3 { 
+            margin-top: 0; 
+            color: var(--dark-red);
+        }
+
+        .notice p { 
+            margin-bottom: 5px; 
+            color: #333;
+        }
+
+        .notice small { 
+            color: #777; 
+        }
+
+        .notice form {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid var(--light-red);
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: var(--primary-red);
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: darkred;
+        }
+
+        .edit-form {
+    background: var(--white);
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.edit-form button {
+    margin-right: 10px;
+}
+
+        .edit-btn, .delete-btn {
+            padding: 5px 10px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .edit-btn {
+            background-color: var(--secondary-red);
+            color: var(--white);
+        }
+
+        .edit-btn:hover {
+            background-color: var(--dark-red);
+        }
+
+        .delete-btn {
+            background-color: var(--dark-red);
+            color: var(--white);
+        }
+
+        .delete-btn:hover {
+            background-color: #8B0000;
+        }
+
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                padding-top: 15px;
+            }
+            .sidebar a {
+                font-size: 16px;
+            }
+            .container {
+                padding: 10px;
+            }
+        }
+        .action-buttons {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.action-icon {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px;
+    color: var(--primary-red);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-icon:hover {
+    transform: scale(1.1);
+    color: var(--dark-red);
+}
+
+.delete-icon {
+    color: var(--primary-red);
+}
+
+.delete-icon:hover {
+    color: var(--dark-red);
+}
+
+/* Tooltip styles */
+[title] {
+    position: relative;
+}
+
+[title]:hover:after {
+    content: attr(title);
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 100;
+}
+    </style>
+</head>
+<body>
+     <!-- Sidebar -->
+     <div id="mySidebar" class="sidebar">
+        <span class="closebtn" onclick="closeNav()">×</span>
+        
+        <div class="sidebar-section">
+            <a href="/home"><i class="fas fa-home"></i> Home</a>
+        </div>
+    
+        <div class="sidebar-section">
+            <a href="/notices"><i class="fas fa-bell"></i> Notices</a>
+        </div>
+    
+        <div class="sidebar-section">
+            <div class="section-title">Resources</div>
+            <a href="/files"><i class="fas fa-file"></i> Files</a>
+            <a href="/vlabs"><i class="fas fa-flask"></i> vLabs</a>
+        </div>
+    
+        <div class="sidebar-section">
+            <a href="/profile"><i class="fas fa-user"></i> Profile</a>
+        </div>
+    
+        <div class="sidebar-section">
+            <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </div> 
+
+    <!-- Open button -->
+    <button class="openbtn" onclick="openNav()">☰</button>
+
+    <!-- Main content -->
+    <div id="main">
+        <div class="container">
+            <h1>Notices</h1>
+            
+            <% if (user && (user.role === 'faculty' || user.role === 'admin')) { %>
+                <h2>Create New Notice</h2>
+                <form id="createNoticeForm" class="notice-form">
+                    <input type="text" name="title" placeholder="Notice Title" required>
+                    <textarea name="content" placeholder="Notice Content" required></textarea>
+                    <button type="submit">Post Notice</button>
+                </form>
+            <% } %>
+
+            <h2>All Notices</h2>
+            <div id="noticesContainer">
+                <% if (notices && notices.length > 0) { %>
+                    <% notices.forEach(notice => { %>
+                        <div class="notice" id="notice-<%= notice._id %>">
+                            <h3><%= notice.title %></h3>
+                            <p><%= notice.content %></p>
+                            <small>Posted by: <%= notice.createdBy %> on <%= notice.createdAt.toLocaleString() %></small>
+                            
+                            <% if (user && (user.role === 'faculty' || user.role === 'admin')) { %>
+                                <div class="action-buttons">
+                                    <button onclick="showEditForm('<%= notice._id %>', '<%= notice.title %>', `<%= notice.content %>`)" 
+                                            class="action-icon" 
+                                            title="Edit Notice">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    
+                                    <button onclick="deleteNotice('<%= notice._id %>')"
+                                            class="action-icon delete-icon" 
+                                            title="Delete Notice">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            <% } %>
+                        </div>
+                    
+                        <div id="editForm-<%= notice._id %>" class="edit-form" style="display: none;">
+                            <form onsubmit="event.preventDefault(); submitEdit('<%= notice._id %>')">
+                                <input type="text" name="title" id="editTitle-<%= notice._id %>" required>
+                                <textarea name="content" id="editContent-<%= notice._id %>" required></textarea>
+                                <button type="submit">Update Notice</button>
+                                <button type="button" onclick="hideEditForm('<%= notice._id %>')">Cancel</button>
+                            </form>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <p>No notices available.</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+        }
+
+        function showEditForm(noticeId, title, content) {
+            content = content.replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+            document.querySelectorAll('.edit-form').forEach(form => {
+                form.style.display = 'none';
+            });
+            const editForm = document.getElementById(`editForm-${noticeId}`);
+            const titleInput = document.getElementById(`editTitle-${noticeId}`);
+            const contentInput = document.getElementById(`editContent-${noticeId}`);
+
+            titleInput.value = title;
+            contentInput.value = content;
+            editForm.style.display = 'block';
+        }
+
+        function hideEditForm(noticeId) {
+            document.getElementById(`editForm-${noticeId}`).style.display = 'none';
+        }
+
+        async function deleteNotice(noticeId) {
+        if (confirm('Are you sure you want to delete this notice?')) {
+            try {
+                const response = await fetch(`/notices/${noticeId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    document.getElementById(`notice-${noticeId}`).remove();
+                    document.getElementById(`editForm-${noticeId}`).remove();
+                    alert('Notice deleted successfully');
+                } else {
+                    const data = await response.json();
+                    alert(data.error || 'Error deleting notice');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error deleting notice');
+            }
+        }
+    }
+    function showEditForm(noticeId, title, content) {
+        // Decode content if it contains HTML entities
+        content = content.replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+
+        // Hide all other edit forms
+        document.querySelectorAll('.edit-form').forEach(form => {
+            form.style.display = 'none';
+        });
+
+        // Show the selected edit form
+        const editForm = document.getElementById(`editForm-${noticeId}`);
+        const titleInput = document.getElementById(`editTitle-${noticeId}`);
+        const contentInput = document.getElementById(`editContent-${noticeId}`);
+
+        titleInput.value = title;
+        contentInput.value = content;
+        editForm.style.display = 'block';
+    }
+
+    // Update the submitEdit function
+    async function submitEdit(noticeId) {
+        const titleInput = document.getElementById(`editTitle-${noticeId}`);
+        const contentInput = document.getElementById(`editContent-${noticeId}`);
+        
+        const formData = new FormData();
+        formData.append('title', titleInput.value);
+        formData.append('content', contentInput.value);
+
+        try {
+            const response = await fetch(`/notices/${noticeId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    title: titleInput.value,
+                    content: contentInput.value
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                updateNoticeInDOM(noticeId, data.notice);
+                hideEditForm(noticeId);
+                alert('Notice updated successfully');
+            } else {
+                const error = await response.json();
+                alert(error.message || 'Error updating notice');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred while updating the notice');
+        }
+    }
+
+    // Update the updateNoticeInDOM function
+    function updateNoticeInDOM(noticeId, updatedNotice) {
+        const noticeElement = document.getElementById(`notice-${noticeId}`);
+        if (noticeElement) {
+            noticeElement.querySelector('h3').textContent = updatedNotice.title;
+            noticeElement.querySelector('p').textContent = updatedNotice.content;
+            
+            // Update the timestamp
+            const timestamp = new Date(updatedNotice.updatedAt).toLocaleString();
+            noticeElement.querySelector('small').textContent = 
+                `Posted by: ${updatedNotice.createdBy} on ${timestamp} (Edited)`;
+        }
+    }
+
+    function hideEditForm(noticeId) {
+        document.getElementById(`editForm-${noticeId}`).style.display = 'none';
+    }
+        document.addEventListener('DOMContentLoaded', function() {
+        const createNoticeForm = document.getElementById('createNoticeForm');
+        if (createNoticeForm) {
+            createNoticeForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                try {
+                    const response = await fetch('/notices', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: new URLSearchParams(formData)
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        addNewNoticeToDOM(data.notice);
+                        this.reset();
+                        alert('Notice created successfully');
+                    } else {
+                        const error = await response.json();
+                        alert(error.message || 'Error creating notice');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An error occurred while creating the notice');
+                }
+            });
+        }
+    });
+        function addNewNoticeToDOM(notice) {
+            const noticesContainer = document.getElementById('noticesContainer');
+            const userRole = '<%= user ? user.role : "" %>'; // Get user role from EJS
+            
+            const newNoticeHTML = `
+                <div class="notice" id="notice-${notice._id}">
+                    <h3>${notice.title}</h3>
+                    <p>${notice.content}</p>
+                    <small>Posted by: ${notice.createdBy} on ${new Date(notice.createdAt).toLocaleString()}</small>
+                    
+                    ${(userRole === 'faculty' || userRole === 'admin') ? `
+                        <div class="action-buttons">
+                            <button onclick="showEditForm('${notice._id}', '${notice.title}', \`${notice.content}\`)" 
+                                    class="action-icon" 
+                                    title="Edit Notice">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            
+                            <button onclick="deleteNotice('${notice._id}')"
+                                    class="action-icon delete-icon" 
+                                    title="Delete Notice">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    ` : ''}
+                </div>
+
+                <div id="editForm-${notice._id}" class="edit-form" style="display: none;">
+                    <form onsubmit="event.preventDefault(); submitEdit('${notice._id}')">
+                        <input type="text" name="title" id="editTitle-${notice._id}" required>
+                        <textarea name="content" id="editContent-${notice._id}" required></textarea>
+                        <button type="submit">Update Notice</button>
+                        <button type="button" onclick="hideEditForm('${notice._id}')">Cancel</button>
+                    </form>
+                </div>
+            `;
+
+            // Add the new notice at the beginning of the container
+            noticesContainer.insertAdjacentHTML('afterbegin', newNoticeHTML);
+        }
+
+        // Function to handle errors
+        function handleError(error) {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again later.');
+        }
+
+        // Function to format date
+        function formatDate(date) {
+            return new Date(date).toLocaleString();
+        }
+
+        // Function to escape HTML to prevent XSS
+        function escapeHTML(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>
